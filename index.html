@@ -101,38 +101,42 @@
       color: #323b4c;
     }
 
-    .sticky-bar {
-      position: sticky;
-      top: 0;
-      background-color: #323b4c;
-      color: #ffffff;
-      border-bottom: 1px solid #ccc;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .sticky-bar nav a {
-      margin-left: 15px;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .sticky-bar nav a:hover {
-      text-decoration: underline;
-      color: #e5e7eb;
-    }
-    .hidden {
-  display: none;
-}
-
-.sticky-bar.show {
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  background-color: #323b4c;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  min-height: 50px;
 }
+
+.sticky-bar nav a {
+  margin-left: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sticky-bar nav a:hover {
+  color: #E5E7EB;
+  text-decoration: underline;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+
     .floating-cv-button {
   position: fixed;
   bottom: 20px;
@@ -155,25 +159,30 @@
   </style>
 </head>
 <body>
-  <div class="sticky-bar hidden" id="stickyBar">
-    <span>Harry Lucas Dickenson</span>
-    <nav>
-      <a href="index.html">Home</a>
-  
+  <div class="sticky-bar">
+    <span id="stickyTitle" class="hidden">Harry Lucas Dickenson</span>
+    <nav id="stickyNav" class="hidden">
     </nav>
   </div>
   <script>
   window.addEventListener('scroll', function () {
-    const bar = document.getElementById('stickyBar');
+    const title = document.getElementById('stickyTitle');
+    const nav = document.getElementById('stickyNav');
+
     if (window.scrollY > 150) {
-      bar.classList.add('show');
-      bar.classList.remove('hidden');
+      title.classList.add('show');
+      title.classList.remove('hidden');
+      nav.classList.add('show');
+      nav.classList.remove('hidden');
     } else {
-      bar.classList.add('hidden');
-      bar.classList.remove('show');
+      title.classList.add('hidden');
+      title.classList.remove('show');
+      nav.classList.add('hidden');
+      nav.classList.remove('show');
     }
   });
 </script>
+
 
   <div class="container">
     <h1>Harry Lucas Dickenson</h1>
