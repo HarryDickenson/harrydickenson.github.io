@@ -86,6 +86,28 @@
 .site-footer a:hover {
   text-decoration: underline;
 }
+    .sticky-bar {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sticky-bar nav a {
+  margin-left: 15px;
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sticky-bar nav a:hover {
+  text-decoration: underline;
   </style>
 </head>
 
@@ -94,22 +116,22 @@
     <h1>Harry Lucas Dickenson</h1>
     <p style="font-size: 18px;text-align: center;"> <strong>MSC Marketing Graduate | Creative Thinker | Great Team-worker | Skilled Communicator</strong></p>
 
-    <div class="section">
+    <div class="section" id= "about me">
       <h2>About Me</h2>
       <p>Hi, I'm Harry — a master's graduate and passionate marketer who thrives on creativity and continuous learning. This website is a snapshot of who I am and showcases the projects I've worked on so far.</p>
     </div>
 
-    <div class="section">
+    <div class="section" id="video">
       <h2>Watch My Intro Video</h2>
       <p style="text-align: center;"><em>Video coming soon!</em></p>
     </div>
 
-    <div class="section">
+    <div class="section" id="CV">
       <h2>Download My CV</h2>
       <p><a href="Harry_Dickenson_CV.pdf" download>Download Harry Dickenson's CV (PDF)</a></p>
     </div>
 
-    <div class="section">
+    <div class="section" id="portfolio">
       <h2>Portfolio</h2>
          <div class="portfolio-item">
           <a href="IMC Assessment.pdf" download>IMC Assessment – Tesco & M&S</a>
@@ -122,7 +144,15 @@
     </div>
   </div>
 </body>
-<footer class="site-footer">
+  <div class="sticky-bar">
+  <span>Harry Lucas Dickenson</span>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+<footer class="site-footer" id="contact">
   <h2><strong>Contact Info:</strong></h2>
   <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> |
      📞 +44 (0)7985 579 323 |
