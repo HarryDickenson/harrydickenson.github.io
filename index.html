@@ -126,18 +126,54 @@
       text-decoration: underline;
       color: #e5e7eb;
     }
+    .hidden {
+  display: none;
+}
+
+.sticky-bar.show {
+  display: flex;
+}
+    .floating-cv-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #323b4c;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.2s ease;
+  z-index: 1001;
+}
+
+.floating-cv-button:hover {
+  background-color: #1f2937; /* slightly darker */
+}
   </style>
 </head>
 <body>
-  <div class="sticky-bar">
+  <div class="sticky-bar hidden" id="stickyBar">
     <span>Harry Lucas Dickenson</span>
     <nav>
       <a href="index.html">Home</a>
-      <a href="#CV">CV</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
+  
     </nav>
   </div>
+  <script>
+  window.addEventListener('scroll', function () {
+    const bar = document.getElementById('stickyBar');
+    if (window.scrollY > 150) {
+      bar.classList.add('show');
+      bar.classList.remove('hidden');
+    } else {
+      bar.classList.add('hidden');
+      bar.classList.remove('show');
+    }
+  });
+</script>
 
   <div class="container">
     <h1>Harry Lucas Dickenson</h1>
@@ -172,6 +208,7 @@
       </div>
     </div>
   </div>
+    <a href="Harry_Dickenson_CV.pdf" download class="floating-cv-button">📄 Download CV</a>
 
   <footer class="site-footer" id="contact">
     <h2><strong>Contact Info:</strong></h2>
