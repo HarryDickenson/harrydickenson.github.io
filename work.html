@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Work — Harry Lucas Dickenson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: #4e4338; /* brown for cards */
+      --maxw: 1200px;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 50; padding: 16px 24px; border-bottom: 1px solid rgba(0,0,0,0.1); background: rgba(78,67,56,0.95); color: #fff; }
+    .nav { max-width: var(--maxw); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .brand { font-weight: 600; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: #fff; text-decoration: none; font-weight: 500; }
+    .nav-links a:hover { text-decoration: underline; }
+
+    /* Page title */
+    .page-hero { max-width: var(--maxw); margin: 40px auto 20px; padding: 0 24px; }
+    .page-hero h1 { font-size: clamp(28px, 6vw, 48px); margin: 0; }
+
+    /* Work grid */
+    .work-grid { max-width: var(--maxw); margin: 0 auto 80px; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
+    .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; color: #fff; text-align: center; }
+    .work-card h3 { margin: 8px 0; font-weight: 500; font-style: italic; }
+    .work-card .image-box { background: #fff; color: #333; width: 90%; flex: 1; margin: 8px 0; display: flex; justify-content: center; align-items: center; }
+    .work-card .image-box p { margin: 0; }
+    .work-card .desc { padding: 8px; font-size: 14px; }
+
+    /* Footer */
+    .site-footer { padding: 40px 24px; background: #f7f7f7; border-top: 1px solid rgba(0,0,0,0.1); text-align: center; }
+    .site-footer a { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <div class="brand"><a href="index.html#home" style="text-decoration:none;color:inherit">Harry Lucas Dickenson</a></div>
+      <div class="nav-links">
+        <a href="index.html#home">Home</a>
+        <a href="work.html" aria-current="page">Work</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <h1>My Work</h1>
+  </section>
+
+  <section class="work-grid">
+    <div class="work-card">
+      <h3>Mulberry Group Work</h3>
+      <div class="image-box"><p>Image</p></div>
+      <div class="desc">Brief Description</div>
+    </div>
+
+    <div class="work-card">
+      <h3>IMC – M&amp;S and Tesco</h3>
+      <div class="image-box"><p>Image</p></div>
+      <div class="desc">Brief Description</div>
+    </div>
+
+    <div class="work-card">
+      <h3>MIP – Report 1</h3>
+      <div class="image-box"><p>Image</p></div>
+      <div class="desc">Brief Description</div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
+    <p>Back to <a href="index.html#home">Home</a></p>
+  </footer>
+</body>
+</html>
 
