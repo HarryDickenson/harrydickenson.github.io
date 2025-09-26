@@ -15,6 +15,7 @@
     --text:#111111;
     --card-bg:#4e4338;
     --header-bg:#6a645f;
+    --header-fg:#1d1a14; /* NEW: header text colour */
     --maxw:1200px;
   }
 
@@ -32,13 +33,13 @@
     position:sticky; top:0; z-index:50;
     padding:16px 24px;
     border-bottom:1px solid rgba(0,0,0,.1);
-    background:var(--header-bg); color:#fff;
+    background:var(--header-bg); color:var(--header-fg);
   }
   .nav{ max-width:var(--maxw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
   .brand{ font-weight:600; }
   .nav-links{ display:flex; gap:28px; }
-  .nav-links a{ color:#fff; text-decoration:none; font-weight:500; }
-  .nav-links a:hover{ text-decoration:underline; }
+  .nav-links a{ color:var(--header-fg); text-decoration:none; font-weight:500; }
+  .nav-links a:hover{ text-decoration:underline; color:var(--header-fg); }
 
   /* Page title */
   .page-hero{ max-width:var(--maxw); margin:40px auto 20px; padding:0 24px; }
