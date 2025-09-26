@@ -2,253 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harry Lucas Dickenson - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harry Lucas Dickenson — Marketing Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #4a4a4a;
+      --card: #231b14; /* deep brown from mockup */
+      --accent: #3b2f25; /* darker for button */
+      --radius: 1.25rem;
+      --maxw: 1200px;
+    }
+    html, body { height: 100%; }
     body {
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #e4e4e4;
-      color: #323b4c;
-      line-height: 1.6;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
     }
-
-    .container {
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    h1, h2 {
-      color: #323b4c;
-      text-align: center;
-    }
-
-    a {
-      color: #3B82F6;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .section {
-      margin-top: 30px;
-    }
-
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-    }
-
-    .video-container iframe {
-      position: absolute;
+    /* ===== Header / Nav ===== */
+    .site-header {
+      position: sticky; /* becomes sticky once scrolled past hero */
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      z-index: 50;
+      transition: backdrop-filter 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease, padding 220ms ease;
+      padding: 16px 24px;
+      border-bottom: 1px solid transparent;
     }
-
-    .portfolio-item {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      background-color: #e6e3dd;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    .site-header.is-sticky {
+      background-color: rgba(255,255,255,0.88);
+      backdrop-filter: saturate(140%) blur(8px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      border-color: rgba(0,0,0,0.06);
     }
-
-    .portfolio-item a {
-      font-weight: bold;
-      font-size: 16px;
-      color: #323b4c;
+    .nav {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
     }
-
-    .portfolio-item p {
-      font-size: 14px;
-      margin-top: 8px;
-      color: #323b4c;
-    }
-
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #e4e4e4;
-      font-size: 14px;
-      color: #323b4c;
-      border-top: 1px solid #ccc;
-      margin-top: 50px;
-    }
-
-    .site-footer a {
-      color: #3B82F6;
+    .brand { font-weight: 600; letter-spacing: 0.2px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      color: var(--text);
       text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-links a:hover { text-decoration: underline; }
+
+    /* ===== Hero ===== */
+    .hero {
+      max-width: var(--maxw);
+      margin: 56px auto 40px auto; /* leave room under non-sticky header */
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: clamp(24px, 5vw, 64px);
+    }
+    .hero h1 {
+      font-size: clamp(42px, 10vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -1px;
+      margin: 0;
+      font-weight: 700;
+    }
+    .me-card {
+      aspect-ratio: 1 / 1;
+      background: var(--card);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+      user-select: none;
     }
 
-    .site-footer a:hover {
-      text-decoration: underline;
+    /* ===== About Section ===== */
+    .section {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 48px 24px 96px 24px;
     }
+    .section h2 { font-size: clamp(28px, 5vw, 56px); margin: 0 0 24px 0; }
+    .lead { color: var(--muted); font-size: 20px; }
+    .section p { max-width: 80ch; font-size: 20px; }
 
-    .site-footer p:last-child {
-      font-size: 13px;
-      color: #323b4c;
+    /* ===== Floating CV Button ===== */
+    .cv-btn {
+      position: fixed;
+      right: 24px; bottom: 24px;
+      background: var(--accent);
+      color: #111;
+      color: #fff;
+      border: 0;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+      transition: transform 160ms ease, box-shadow 160ms ease;
     }
+    .cv-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
 
-.sticky-bar {
-  position: sticky;
-  top: 0;
-  background-color: #323b4c;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
-  border-bottom: 1px solid #ccc;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-  min-height: 50px;
-}
-
-.sticky-bar nav a {
-  margin-left: 15px;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.sticky-bar nav a:hover {
-  color: #E5E7EB;
-  text-decoration: underline;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.show {
-  visibility: visible;
-  opacity: 1;
-}
- 
-
-    .floating-cv-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #323b4c;
-  color: #ffffff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.2s ease;
-  z-index: 1001;
-}
-
-.floating-cv-button:hover {
-  background-color: #1f2937; /* slightly darker */
-}
+    /* ===== Responsive ===== */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; margin-top: 32px; }
+      .me-card { order: -1; }
+    }
   </style>
 </head>
 <body>
-  <div class="sticky-bar">
-    <span id="stickyTitle" class="hidden">Harry Lucas Dickenson</span>
-    <nav id="stickyNav" class="hidden">
-      <a href="#">Home</a>
+  <!-- Header becomes translucent sticky bar when you scroll past the hero -->
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" aria-label="Primary">
+      <div class="brand">Harry Lucas Dickenson</div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
-  </div>
+  </header>
+
+  <!-- Hero / Landing -->
+  <main id="home" class="hero" role="main">
+    <h1>Marketing<br/>Portfolio</h1>
+    <figure class="me-card" aria-label="Image placeholder">
+      <figcaption>Image of Me</figcaption>
+    </figure>
+  </main>
+
+  <!-- About Section -->
+  <section id="about" class="section" aria-labelledby="about-title">
+    <h2 id="about-title">About Me</h2>
+    <p class="lead">I partner with real businesses to design data-driven campaigns that grow awareness, spark engagement, and convert interest into action.</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel metus sit amet metus dapibus placerat. Curabitur ut sollicitudin metus. Suspendisse lorem felis, blandit a viverra quis, accumsan vel magna.
+    </p>
+    <p>
+      Aliquam interdum lacus non convallis porttitor. Duis quis posuere purus, a volutpat est. Integer fermentum purus quis metus ornare pharetra. Etiam nec cursus leo.
+    </p>
+  </section>
+
+  <!-- Extra spacer content to demonstrate sticky header effect -->
+  <section class="section" id="work" aria-label="Selected work">
+    <h2>Selected Work</h2>
+    <p>Project cards will go here…</p>
+  </section>
+
+  <section class="section" id="contact" aria-label="Contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
+  </section>
+
+  <!-- Floating Download CV Button -->
+  <a href="#" class="cv-btn" download aria-label="Download my CV">Download My CV</a>
+
   <script>
-  window.addEventListener('scroll', function () {
-    const title = document.getElementById('stickyTitle');
-    const nav = document.getElementById('stickyNav');
+    // Adds .is-sticky to header once you scroll past the hero title area
+    const header = document.getElementById('siteHeader');
+    const hero = document.querySelector('.hero');
 
-    if (window.scrollY > 150) {
-      title.classList.add('show');
-      title.classList.remove('hidden');
-      nav.classList.add('show');
-      nav.classList.remove('hidden');
-    } else {
-      title.classList.add('hidden');
-      title.classList.remove('show');
-      nav.classList.add('hidden');
-      nav.classList.remove('show');
-    }
-  });
-</script>
+    // Use IntersectionObserver for buttery performance
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        header.classList.toggle('is-sticky', !entry.isIntersecting);
+      },
+      { rootMargin: '-1px 0px 0px 0px', threshold: 0 }
+    );
+    obs.observe(hero);
 
-
-  <div class="container">
-    <h1>Harry Lucas Dickenson</h1>
-    <p style="font-size: 18px; text-align: center;">
-      <strong>MSC Marketing Graduate | Creative Thinker | Great Team-worker | Skilled Communicator</strong>
-    </p>
-
-    <div class="section" id="about me">
-      <h2>About Me</h2>
-      <p>Hi, I'm Harry — a master's graduate and passionate marketer who thrives on creativity and continuous learning. This website is a snapshot of who I am and showcases the projects I've worked on so far.</p>
-    </div>
-
-    <div class="section" id="video">
-      <h2>Watch My Intro Video</h2>
-      <p style="text-align: center;"><em>Video coming soon!</em></p>
-    </div>
-
-    <div class="section" id="CV">
-      <h2>Download My CV</h2>
-      <p><a href="Harry_Dickenson_CV.pdf" download>Download Harry Dickenson's CV (PDF)</a></p>
-    </div>
-
-    <div class="section" id="portfolio">
-      <h2>Portfolio</h2>
-      <div class="portfolio-item">
-        <a href="IMC Assessment.pdf" download>IMC Assessment – Tesco & M&S</a>
-        <p>An in-depth report comparing Tesco and Marks & Spencer's communication strategies for my Integrated Marketing Communications module.</p>
-      </div>
-      <div class="portfolio-item">
-        <a href="Group 7 - Mulberry.pdf" download>Marketing Strategy Presentation – Mulberry</a>
-        <p>A strategic marketing presentation developed for Mulberry, focusing on sustainable branding, international expansion, and Gen Z consumer engagement. Created as a group project for our Marketing Strategy module.</p>
-      </div>
-      <div class="portfolio-item">
-        <a href="MP1 Github.pdf" download>Marketing in Practice – Report 1</a>
-        <p>Developed a full-scale digital marketing campaign for a real SME (Nicola’s Chocolate), applying the SOSTAC and RACE frameworks to expand brand reach, drive engagement, and deliver a projected 400% revenue growth.</p>
-      </div>
-      <div class="portfolio-item">
-        <a href="MP2 Github.pdf" download>Marketing in Practice – Report 2</a>
-        <p>Designed a youth-focused experiential marketing campaign for Isles of Scilly Travel, centred on the world’s first Island-Hopping Festival, using SOSTAC to drive awareness, engagement, and a forecasted 300–500% ROI.</p>
-      </div>
-    </div>
-  </div>
-    <a href="Harry_Dickenson_CV.pdf" download class="floating-cv-button">📄 Download CV</a>
-
-  <footer class="site-footer" id="contact">
-    <h2><strong>Contact Info:</strong></h2>
-    <p>
-      📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> |
-      📞 +44 (0)7985 579 323 |
-      <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a>
-    </p>
-
-    <hr style="margin: 20px auto; width: 60%; border: none; border-top: 1px solid #ccc;" />
-
-    <p>
-      💻 <strong>View the source code:</strong>
-      <a href="https://github.com/HarryDickenson/harrydickenson.github.io" target="_blank">
-        GitHub Repository
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub" style="height: 20px; vertical-align: middle; margin-left: 5px;">
-      </a>
-    </p>
-  </footer>
+    // Smooth-scroll for same-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', '#' + id);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
