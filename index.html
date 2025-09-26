@@ -15,7 +15,7 @@
       --card: #231b14;
       --accent: #3b2f25;
       --radius: 1.25rem;
-      --header-bg: #6a645f;   /* header background */
+      --header-bg: #6a645f;   /* header background when scrolled */
       --header-fg: #1d1a14;   /* header text colour */
       --maxw: 1200px;
     }
@@ -36,13 +36,15 @@
       z-index: 50;
       padding: 16px 24px;
       border-bottom: 1px solid transparent;
-      background-color: var(--header-bg);   /* solid at top too */
-      color: var(--header-fg);
-      transition: box-shadow 220ms ease, border-color 220ms ease;
+      background-color: transparent;        /* transparent at top */
+      color: var(--header-fg);               /* #1d1a14 */
+      transition: background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     }
     .site-header.is-sticky{
+      background-color: var(--header-bg);    /* #6a645f once scrolled */
       box-shadow: 0 6px 24px rgba(0,0,0,0.08);
       border-color: rgba(0,0,0,0.06);
+      color: var(--header-fg);
     }
     .nav{
       max-width: var(--maxw);
@@ -54,16 +56,8 @@
     }
     .brand{ font-weight: 600; letter-spacing: .2px; }
     .nav-links{ display: flex; gap: 28px; align-items: center; }
-
-    /* FORCE header link colours to the header fg */
-    .site-header .brand,
-    .site-header .brand a,
-    .site-header .nav-links a{
-      color: var(--header-fg) !important;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .site-header .nav-links a:hover{ text-decoration: underline; }
+    .nav-links a{ color: inherit; text-decoration: none; font-weight: 500; }
+    .nav-links a:hover{ text-decoration: underline; }
 
     /* ===== Hero ===== */
     .hero{
@@ -141,7 +135,7 @@
   <!-- Header -->
   <header class="site-header" id="siteHeader">
     <nav class="nav" aria-label="Primary">
-      <div class="brand"><a href="#home" style="text-decoration:none">Harry Lucas Dickenson</a></div>
+      <div class="brand"><a href="#home" style="text-decoration:none; color:inherit">Harry Lucas Dickenson</a></div>
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="work.html">Work</a>
@@ -189,6 +183,28 @@
   <!-- Floating Download CV Button -->
   <a href="#" class="cv-btn" download aria-label="Download my CV">Download My CV</a>
 
+  <!-- JS (single block) -->
   <script>
-    // Add shadow border as soon as we scroll (keeps sticky style active)
-    const
+    // Sticky header: transparent at top, coloured after any scroll
+    const header = document.getElementById('siteHeader');
+    function onScroll() {
+      header.classList.toggle('is-sticky', window.scrollY > 0);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // initial state
+
+    // Smooth-scroll for same-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', '#' + id);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
