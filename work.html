@@ -4,87 +4,154 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Work — Harry Lucas Dickenson</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-:root {
---bg: #ffffff;
---text: #111111;
---card-bg: #4e4338;
---header-bg: #6a645f;
---maxw: 1200px;
-}
-body {
-margin: 0;
-font-family: Inter, sans-serif;
-color: var(--text);
-background: var(--bg);
-line-height: 1.5;
-}
-.site-header { position: sticky; top: 0; z-index: 50; padding: 16px 24px; border-bottom: 1px solid rgba(0,0,0,0.1); background: var(--header-bg); color: #fff; }
-.nav { max-width: var(--maxw); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.brand { font-weight: 600; }
-.nav-links { display: flex; gap: 28px; }
-.nav-links a { color: #fff; text-decoration: none; font-weight: 500; }
-.nav-links a:hover { text-decoration: underline; }
+  :root{
+    --bg:#ffffff;
+    --text:#111111;
+    --card-bg:#4e4338;
+    --header-bg:#6a645f;
+    --maxw:1200px;
+  }
 
+  /* Base */
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    color:var(--text);
+    background:var(--bg);
+    line-height:1.5;
+  }
 
-.page-hero { max-width: var(--maxw); margin: 40px auto 20px; padding: 0 24px; }
-.page-hero h1 { font-size: clamp(28px, 6vw, 48px); margin: 0; }
+  /* Header */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    padding:16px 24px;
+    border-bottom:1px solid rgba(0,0,0,.1);
+    background:var(--header-bg); color:#fff;
+  }
+  .nav{ max-width:var(--maxw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+  .brand{ font-weight:600; }
+  .nav-links{ display:flex; gap:28px; }
+  .nav-links a{ color:#fff; text-decoration:none; font-weight:500; }
+  .nav-links a:hover{ text-decoration:underline; }
 
+  /* Page title */
+  .page-hero{ max-width:var(--maxw); margin:40px auto 20px; padding:0 24px; }
+  .page-hero h1{ font-size:clamp(40px,4vw,64px); margin:0; }
 
-.work-grid { max-width: var(--maxw); margin: 0 auto 80px; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
-.work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; color: #fff; text-align: center; }
-.work-card h3 { margin: 8px 0; font-weight: 500; font-style: italic; }
-.work-card img { width: 90%; margin: 8px 0; border-radius: 6px; }
-.work-card .desc { padding: 8px; font-size: 14px; }
-.work-card .btn { display: inline-block; margin: 12px 0; padding: 8px 14px; background: #fff; color: var(--card-bg); font-weight: 600; border-radius: 6px; text-decoration: none; }
-.work-card .btn:hover { background: #f2f2f2; }
+  /* Grid + cards */
+  .work-grid{
+    max-width:var(--maxw);
+    margin:0 auto 80px; padding:0 24px;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+    gap:40px;
+  }
+  .work-card{
+    background:var(--card-bg);
+    border-radius:12px; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    color:#fff;
+    padding-bottom:14px;
+  }
 
+  /* Titles now use installed fonts (Inter/system stack) */
+  .work-card h3{
+    margin:10px 0 6px 0;
+    font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font-weight:700;
+    font-style:normal;
+    font-size:clamp(18px, 1.6vw, 26px);
+    letter-spacing:.2px;
+  }
 
-.site-footer { padding: 40px 24px; background: #f7f7f7; border-top: 1px solid rgba(0,0,0,0.1); text-align: center; }
-.site-footer a { color: var(--text); }
+  /* Image */
+  .work-card img{
+    width:85%;
+    height:auto; display:block;
+    border-radius:6px;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+    margin:8px 0;
+  }
+
+  /* Description + button scale fluidly */
+  .work-card .desc{
+    padding:10px 16px;
+    max-width:90%;
+    line-height:1.55;
+    font-size:clamp(15px, 1.1vw, 18px);
+  }
+  .work-card .btn{
+    display:inline-block;
+    margin:12px 0;
+    padding:clamp(8px,.8vw,12px) clamp(14px,1.2vw,18px);
+    background:#fff; color:var(--card-bg);
+    font-weight:700; text-decoration:none;
+    border-radius:10px; font-size:clamp(14px, 1vw, 17px);
+    border:1px solid rgba(0,0,0,.12);
+  }
+  .work-card .btn:hover{ background:#f2f2f2; }
+
+  /* Footer */
+  .site-footer{
+    padding:40px 24px; background:#f7f7f7;
+    border-top:1px solid rgba(0,0,0,.1); text-align:center;
+  }
+  .site-footer a{ color:var(--text); }
 </style>
 </head>
+
 <body>
 <header class="site-header">
-<nav class="nav">
-<div class="brand"><a href="index.html#home" style="text-decoration:none;color:inherit">Harry Lucas Dickenson</a></div>
-<div class="nav-links">
-<a href="index.html#home">Home</a>
-<a href="work.html" aria-current="page">Work</a>
-<a href="index.html#contact">Contact</a>
-</div>
-</nav>
+  <nav class="nav">
+    <div class="brand"><a href="index.html#home" style="text-decoration:none;color:inherit">Harry Lucas Dickenson</a></div>
+    <div class="nav-links">
+      <a href="index.html#home">Home</a>
+      <a href="work.html" aria-current="page">Work</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
 </header>
 
-
 <section class="page-hero">
-<h1>My Work</h1>
+  <h1>My Work</h1>
 </section>
 
-
 <section class="work-grid">
-<div class="work-card">
-<h3>Mulberry Group Work</h3>
-<img src="assets/pdfs/Mulberry IMG.png" alt="Mulberry project preview" />
-<div class="desc">A strategic marketing presentation focusing on sustainable branding, international expansion, and Gen Z consumer engagement.</div>
-<a class="btn" href="assets/pdfs/Group 7 - Mulberry.pdf" download>Download PDF</a>
-</div>
+  <!-- Card 1 -->
+  <div class="work-card">
+    <h3>Mulberry Group Work</h3>
+    <img
+      src="assets/pdfs/Mulberry IMG.png"
+      alt="Mulberry project preview"
+    />
+    <div class="desc">
+      A strategic marketing presentation focusing on sustainable branding, international expansion, and Gen Z consumer engagement.
+    </div>
+    <a class="btn" href="assets/pdfs/Group 7 - Mulberry.pdf" download>Download PDF</a>
+  </div>
 
-<div class="work-card">
-    <h3>IMC – M&S and Tesco</h3>
-    <img src="assets/pdfs/IMC IMG.png" alt="IMC project preview" />
-    <div class="desc">An in-depth report comparing Tesco and M&S’s communication strategies.</div>
+  <!-- Card 2 -->
+  <div class="work-card">
+    <h3>IMC – M&amp;S and Tesco</h3>
+    <img
+      src="assets/pdfs/IMC IMG.png"
+      alt="IMC project preview"
+    />
+    <div class="desc">
+      An in-depth report comparing Tesco and M&amp;S’s communication strategies.
+    </div>
     <a class="btn" href="assets/pdfs/IMC Assessment.pdf" download>Download PDF</a>
   </div>
 </section>
 
-
 <footer class="site-footer">
-<p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
-<p>Back to <a href="index.html#home">Home</a></p>
+  <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
+  <p>Back to <a href="index.html#home">Home</a></p>
 </footer>
 </body>
 </html>
