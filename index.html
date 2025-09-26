@@ -12,12 +12,14 @@
       --bg: #ffffff;
       --text: #111111;
       --muted: #4a4a4a;
-      --card: #231b14; /* deep brown from mockup */
-      --accent: #3b2f25; /* darker for button */
+      --card: #231b14;            /* deep brown from mockup */
+      --accent: #3b2f25;          /* darker for button */
       --radius: 1.25rem;
-      --header-bg: #6a645f; /* new sticky header colour */
+      --header-bg: #6a645f;       /* sticky header background */
+      --header-fg: #1d1a14;       /* sticky header text colour */
       --maxw: 1200px;
     }
+
     html, body { height: 100%; }
     body {
       margin: 0;
@@ -26,20 +28,23 @@
       background: var(--bg);
       line-height: 1.5;
     }
+
     /* ===== Header / Nav ===== */
     .site-header {
-      position: sticky; /* becomes sticky once scrolled past hero */
+      position: sticky; /* stays pinned at top while scrolling */
       top: 0;
       z-index: 50;
-      transition: backdrop-filter 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease, padding 220ms ease;
+      transition: background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease, padding 220ms ease;
       padding: 16px 24px;
       border-bottom: 1px solid transparent;
+      background-color: transparent; /* clean on top of hero */
+      color: var(--header-fg);        /* header text colour */
     }
     .site-header.is-sticky {
-      background-color: var(--header-bg);
-      backdrop-filter: saturate(140%) blur(8px);
+      background-color: var(--header-bg); /* solid when scrolled */
       box-shadow: 0 6px 24px rgba(0,0,0,0.08);
       border-color: rgba(0,0,0,0.06);
+      color: var(--header-fg);            /* keep same text colour */
     }
     .nav {
       max-width: var(--maxw);
@@ -52,37 +57,16 @@
     .brand { font-weight: 600; letter-spacing: 0.2px; }
     .nav-links { display: flex; gap: 28px; align-items: center; }
     .nav-links a {
-      color: var(--text);
+      color: inherit;              /* follows header text colour */
       text-decoration: none;
       font-weight: 500;
     }
     .nav-links a:hover { text-decoration: underline; }
-   /* full-width media inside a section, with soft corners & shadow */
-    .wide-media{
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-      background: #f2f2f2;
-    }
-    .video-wrap{
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    }
-.video-wrap iframe{
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-}
+
     /* ===== Hero ===== */
     .hero {
       max-width: var(--maxw);
-      margin: 56px auto 40px auto; /* leave room under non-sticky header */
+      margin: 56px auto 40px auto; /* space under header */
       padding: 0 24px;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -107,7 +91,7 @@
       user-select: none;
     }
 
-    /* ===== About Section ===== */
+    /* ===== Sections ===== */
     .section {
       max-width: var(--maxw);
       margin: 0 auto;
@@ -117,12 +101,34 @@
     .lead { color: var(--muted); font-size: 20px; }
     .section p { max-width: 80ch; font-size: 20px; }
 
+    /* ===== Media helpers ===== */
+    .wide-media{
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      background: #f2f2f2;
+    }
+    .video-wrap{
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+    .video-wrap iframe{
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
+
     /* ===== Floating CV Button ===== */
     .cv-btn {
       position: fixed;
       right: 24px; bottom: 24px;
       background: var(--accent);
-      color: #111;
       color: #fff;
       border: 0;
       padding: 14px 18px;
@@ -142,7 +148,7 @@
   </style>
 </head>
 <body>
-  <!-- Header becomes translucent sticky bar when you scroll past the hero -->
+  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <nav class="nav" aria-label="Primary">
       <div class="brand">Harry Lucas Dickenson</div>
@@ -173,23 +179,22 @@
       Aliquam interdum lacus non convallis porttitor. Duis quis posuere purus, a volutpat est. Integer fermentum purus quis metus ornare pharetra. Etiam nec cursus leo.
     </p>
   </section>
-  
-  <! -- Video Section -->
-    <section id="video" class="section">
+
+  <!-- Video Section -->
+  <section id="video" class="section">
     <h2>Watch My Intro Video</h2>
     <div class="video-wrap">
-    <iframe
-      src="https://www.youtube.com/embed/VIDEO_ID"
-      title="Intro Video"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-</div>
+      <iframe
+        src="https://www.youtube.com/embed/VIDEO_ID"
+        title="Intro Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </section>
 
-
-  <! -- Contact Section -->
+  <!-- Contact Section -->
   <section class="section" id="contact" aria-label="Contact">
     <h2>Contact</h2>
     <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
@@ -199,18 +204,13 @@
   <a href="#" class="cv-btn" download aria-label="Download my CV">Download My CV</a>
 
   <script>
-    // Adds .is-sticky to header once you scroll past the hero title area
+    // Make header "sticky-styled" as soon as the user starts scrolling
     const header = document.getElementById('siteHeader');
-    const hero = document.querySelector('.hero');
-
-    // Use IntersectionObserver for buttery performance
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        header.classList.toggle('is-sticky', !entry.isIntersecting);
-      },
-      { rootMargin: '-1px 0px 0px 0px', threshold: 0 }
-    );
-    obs.observe(hero);
+    const onScroll = () => {
+      header.classList.toggle('is-sticky', window.scrollY > 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // set initial state on load
 
     // Smooth-scroll for same-page links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
