@@ -65,15 +65,12 @@
   .page-hero{ max-width:var(--maxw); margin:40px auto 20px; padding:0 24px; }
   .page-hero h1{ font-size:clamp(32px,3.5vw,56px); margin:0; }
 
-  /* Grid */
+   /* Grid */
   .work-grid{
     max-width:var(--maxw);
     margin:0 auto 64px;
     padding:0 24px;
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);  /* exactly 2 per row */
-    gap: var(--gap);
+    display:flex; flex-wrap:wrap; gap:var(--gap);
     justify-content:center;
   }
 
@@ -215,28 +212,7 @@
     </div>
   </article>
 
-  <!-- Card 3 -->
-  <article class="work-card">
-    <h3>Marketing in Practice — <span class="force-break">Report 1</span></h3>
-    <a class="work-thumb" href="assets/pdfs/MP1 Github.pdf" download>
-      <img src="assets/pdfs/MIP1 IMG.png" alt="MP1 project preview" />
-    </a>
-    <div class="desc">
-      Full-funnel digital plan for SME Nicola’s Chocolate using SOSTAC &amp; RACE.
-    </div>
-  </article>
-
-  <!-- Card 4 -->
-  <article class="work-card">
-    <h3>Marketing in Practice — <span class="force-break">Report 2</span></h3>
-    <a class="work-thumb" href="assets/pdfs/MP2 Github.pdf" download>
-      <img src="assets/pdfs/MIP2 IMG.png" alt="MP2 project preview" />
-    </a>
-    <div class="desc">
-      A complete marketing campaign for the Isles of Scilly, aimed at improving performance with younger demographics.
-    </div>
-  </article>
-</section>
+ 
 
 <footer class="site-footer">
   <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 ·
