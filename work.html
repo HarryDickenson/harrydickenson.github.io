@@ -14,8 +14,18 @@
     --bg:#ffffff;
     --text:#111111;
     --card-bg:#4e4338;
-    --header-bg:#6a645f;   /* coloured after scroll */
-    --header-fg:#1d1a14;   /* header text colour */
+
+    --header-bg:#6a645f;
+    --header-fg:#1d1a14;
+
+    /* === Card sizing (edit these to taste) === */
+    --card-w: 360px;      /* card width on desktop */
+    --card-h: 540px;      /* total card height */
+    --thumb-h: 320px;     /* image window height */
+    --title-h: 48px;      /* space for title row */
+    --btn-h: 52px;        /* space for the button row */
+
+    --gap: 40px;          /* spacing between cards */
     --maxw:1200px;
   }
 
@@ -28,79 +38,96 @@
     line-height:1.5;
   }
 
-  /* Header — transparent at top, coloured on scroll */
+  /* Header (same as your current) */
   .site-header{
-    position:sticky;
-    top:0;
-    z-index:10000;              /* stay above embeds just in case */
-    isolation:isolate;          /* its own stacking context */
+    position:sticky; top:0; z-index:50;
     padding:16px 24px;
-    border-bottom:1px solid transparent;
-    background:transparent;     /* transparent before scrolling */
-    color:var(--header-fg);
-    transition:background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-  }
-  .site-header.is-sticky{
-    background:var(--header-bg); /* coloured after scroll */
-    box-shadow:0 6px 24px rgba(0,0,0,.08);
-    border-color:rgba(0,0,0,.06);
-    color:var(--header-fg);
+    border-bottom:1px solid rgba(0,0,0,.1);
+    background:var(--header-bg); color:var(--header-fg);
   }
   .nav{ max-width:var(--maxw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
   .brand{ font-weight:600; }
   .nav-links{ display:flex; gap:28px; }
-  .nav-links a{ color:inherit; text-decoration:none; font-weight:500; }
-  .nav-links a:hover{ text-decoration:underline; }
+  .nav-links a{ color:var(--header-fg); text-decoration:none; font-weight:500; }
+  .nav-links a:hover{ text-decoration:underline; color:var(--header-fg); }
 
   /* Page title */
   .page-hero{ max-width:var(--maxw); margin:40px auto 20px; padding:0 24px; }
   .page-hero h1{ font-size:clamp(40px,4vw,64px); margin:0; }
 
-  /* Grid + cards */
+  /* Grid: use flex so cards can have strict fixed width */
   .work-grid{
     max-width:var(--maxw);
-    margin:0 auto 80px; padding:0 24px;
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
-    gap:40px;
+    margin:0 auto 80px;
+    padding:0 24px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--gap);
+    justify-content:center;    /* center in row */
   }
+
+  /* Card: strict size, internal grid keeps rows aligned */
   .work-card{
     background:var(--card-bg);
-    border-radius:12px; overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    color:#fff; padding-bottom:14px;
+    color:#fff;
+    border-radius:12px;
+    width:var(--card-w);
+    height:var(--card-h);
+    display:grid;
+    grid-template-rows: var(--title-h) var(--thumb-h) 1fr var(--btn-h);
+    overflow:hidden;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+  }
+
+  /* Title row */
+  .work-card h3{
+    margin:0;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:18px; letter-spacing:.2px;
+    padding:0 12px;
+    text-align:center;
   }
   .work-card h3 .force-break{ display:block; }
 
-  /* Titles use system stack */
-  .work-card h3{
-    margin:10px 0 6px 0;
-    font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    font-weight:700; font-style:normal;
-    font-size:clamp(18px, 1.6vw, 26px);
-    letter-spacing:.2px;
+  /* Image window (fixed height) */
+  .work-thumb{
+    margin:8px 12px 0 12px;
+    border-radius:6px;
+    background:#fff;
+    height:calc(var(--thumb-h) - 8px); /* account for top margin */
+    overflow:hidden;
+    display:block;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+  }
+  .work-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
 
-  /* Image */
-  .work-card img{
-    width:85%; height:auto; display:block;
-    border-radius:6px; box-shadow:0 4px 16px rgba(0,0,0,.12);
-    margin:8px 0;
+  /* Description (clamped so buttons align) */
+  .desc{
+    padding:10px 16px;
+    font-size:15px;
+    line-height:1.55;
+    display:-webkit-box;
+    -webkit-line-clamp:3;   /* clamp to ~3 lines */
+    -webkit-box-orient:vertical;
+    overflow:hidden;
   }
 
-  /* Description + button */
-  .work-card .desc{
-    padding:10px 16px; max-width:90%; line-height:1.55;
-    font-size:clamp(15px, 1.1vw, 18px);
-  }
-  .work-card .btn{
-    display:inline-block;
-    margin:12px 0;
-    padding:clamp(8px,.8vw,12px) clamp(14px,1.2vw,18px);
+  /* Button row pinned at the bottom */
+  .btn{
+    align-self:end;
+    justify-self:center;
+    margin:8px 0 12px 0;
+    padding:10px 16px;
     background:#fff; color:var(--card-bg);
     font-weight:700; text-decoration:none; border-radius:10px;
-    font-size:clamp(14px, 1vw, 17px); border:1px solid rgba(0,0,0,.12);
+    font-size:15px; border:1px solid rgba(0,0,0,.12);
   }
-  .work-card .btn:hover{ background:#f2f2f2; }
+  .btn:hover{ background:#f2f2f2; }
 
   /* Footer */
   .site-footer{
@@ -108,6 +135,22 @@
     border-top:1px solid rgba(0,0,0,.1); text-align:center;
   }
   .site-footer a{ color:var(--text); }
+
+  /* Responsive: scale card down on small screens */
+  @media (max-width: 920px){
+    :root{
+      --card-w: 320px;
+      --card-h: 500px;
+      --thumb-h: 290px;
+    }
+  }
+  @media (max-width: 360px){
+    :root{
+      --card-w: 300px;
+      --card-h: 480px;
+      --thumb-h: 270px;
+    }
+  }
 </style>
 </head>
 
@@ -127,60 +170,43 @@
   <h1>My Work</h1>
 </section>
 
-<section class="work-grid">
+<section class="work-grid" aria-label="Project grid">
   <!-- Card 1 -->
-  <div class="work-card">
+  <article class="work-card">
     <h3>Mulberry Group Work</h3>
-    <img src="assets/pdfs/Mulberry IMG.png" alt="Mulberry project preview" />
+    <a class="work-thumb" href="assets/pdfs/Group 7 - Mulberry.pdf" download>
+      <img src="assets/pdfs/Mulberry IMG.png" alt="Mulberry project preview" />
+    </a>
     <div class="desc">
       A strategic marketing presentation focusing on sustainable branding, international expansion, and Gen Z consumer engagement.
     </div>
     <a class="btn" href="assets/pdfs/Group 7 - Mulberry.pdf" download>Download PDF</a>
-  </div>
+  </article>
 
   <!-- Card 2 -->
-  <div class="work-card">
+  <article class="work-card">
     <h3>IMC – M&amp;S and Tesco</h3>
-    <img src="assets/pdfs/IMC IMG.png" alt="IMC project preview" />
+    <a class="work-thumb" href="assets/pdfs/IMC Assessment.pdf" download>
+      <img src="assets/pdfs/IMC IMG.png" alt="IMC project preview" />
+    </a>
     <div class="desc">
       An in-depth report comparing Tesco and M&amp;S’s communication strategies.
     </div>
     <a class="btn" href="assets/pdfs/IMC Assessment.pdf" download>Download PDF</a>
-  </div>
+  </article>
 
   <!-- Card 3 -->
-  <div class="work-card">
+  <article class="work-card">
     <h3>Marketing in Practice — <span class="force-break">Report 1</span></h3>
-    <img src="assets/pdfs/MIP1 IMG.png" alt="MP1 project preview" />
+    <a class="work-thumb" href="assets/pdfs/MP1 Github.pdf" download>
+      <img src="assets/pdfs/MIP1 IMG.png" alt="MP1 project preview" />
+    </a>
     <div class="desc">
       Full-funnel digital plan for SME Nicola’s Chocolate using SOSTAC &amp; RACE.
     </div>
     <a class="btn" href="assets/pdfs/MP1 Github.pdf" download>Download PDF</a>
-  </div>
+  </article>
 </section>
-  
-  <!-- Card 4 -->
-  <div class="work-card">
-    <h3>Marketing in Practice — <span class="force-break">Report 2</span></h3>
-    <img src="assets/pdfs/MIP2 IMG.png" alt="MP2 project preview" />
-    <div class="desc">
-      A complete marketing campaign for the Isles of Scilly, aiming to increase their reach among younger demographics.
-    </div>
-    <a class="btn" href="assets/pdfs/MP2 Github.pdf" download>Download PDF</a>
-  </div>
-</section>
-  
-<footer class="site-footer">
-  <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
-  <p>Back to <a href="index.html">Home</a></p>
-</footer>
 
-<!-- JS: make header coloured only after any scroll -->
-<script>
-  const header = document.getElementById('siteHeader');
-  function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll(); // initial state
-</script>
-</body>
-</html>
+<footer class="site-footer">
+  <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/"
