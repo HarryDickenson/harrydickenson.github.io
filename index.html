@@ -62,16 +62,18 @@
     .nav-links a:hover{ text-decoration:underline; }
 
     /* ===== Hero ===== */
-    .hero{
+    .hero {
       max-width: var(--maxw);
-      margin: 0px auto 40px auto;
+      margin: 0 auto; /* remove top margin completely */
       padding: 0 24px;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
+      align-items: center;
       gap: clamp(24px, 5vw, 64px);
-      min-height: calc(100vh - var(--header-h)); /* fill the screen under sticky header */
-      align-items: center;                        /* vertical centering */
-      padding-block: clamp(32px, 6vh, 96px);      /* breathable top/bottom padding */
+    
+      /* Let hero fill most of the screen but not overshoot */
+      min-height: calc(90vh - var(--header-h)); 
+      padding-block: clamp(16px, 4vh, 64px); /* reduce breathing space */
     }
     .hero h1{
       font-size: clamp(42px, 10vw, 120px);
@@ -90,6 +92,15 @@
       font-weight: 500;
       user-select: none;
     }
+      @media (max-width: 960px){
+    .hero {
+      grid-template-columns: 1fr;
+      margin-top: 0;           /* no forced gap */
+      min-height: auto;        /* let content size itself */
+      padding-block: 32px 48px;
+    }
+    .me-card { order: -1; }
+  }
 
     /* ===== Sections ===== */
     .section{
