@@ -70,6 +70,9 @@
       grid-template-columns: 1.2fr 1fr;
       align-items: center;
       gap: clamp(24px, 5vw, 64px);
+      min-height: calc(100vh - var(--header-h)); /* fill the screen under sticky header */
+      align-items: center;                        /* vertical centering */
+      padding-block: clamp(32px, 6vh, 96px);      /* breathable top/bottom padding */
     }
     .hero h1{
       font-size: clamp(42px, 10vw, 120px);
@@ -93,7 +96,7 @@
     .section{
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 48px 24px 96px 24px;
+      padding: clamp(32px, 4vh, 64px) 24px clamp(96px, 12vh, 160px) 24px;
     }
     .section h2{ font-size: clamp(28px, 5vw, 56px); margin: 0 0 24px 0; }
     .lead{ color: var(--muted); font-size: 20px; }
