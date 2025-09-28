@@ -15,8 +15,8 @@
     --text:#111111;
     --card-bg:#4e4338;
 
-    --header-bg:#6a645f;   /* coloured after scroll */
-    --header-fg:#1d1a14;   /* header text colour */
+    --header-bg:#6a645f;
+    --header-fg:#1d1a14;
 
     /* === Card sizing === */
     --card-w: 280px;
@@ -25,7 +25,7 @@
     --thumb-h: 220px;
     --btn-h: 46px;
 
-    --gap: 110px;
+    --gap: 110px;           /* your current spacing */
     --maxw: 1200px;
   }
 
@@ -38,7 +38,7 @@
     line-height:1.5;
   }
 
-  /* Header — transparent at top, coloured after scroll */
+  /* Header */
   .site-header{
     position: sticky; top: 0;
     z-index: 10000;
@@ -74,17 +74,15 @@
     justify-content:center;
   }
 
-  /* Card (fixed size) */
+  /* Card (fixed footprint) */
   .work-card{
     background:var(--card-bg); color:#fff; border-radius:12px;
     width:var(--card-w); height:var(--card-h);
     display:grid; grid-template-rows: var(--title-h) var(--thumb-h) 1fr var(--btn-h);
     overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.08);
-    position: relative; /* needed for z-index on hover */
-    z-index: 0;
+    position: relative; z-index: 0;
     transition: transform 180ms ease, box-shadow 180ms ease;
-    transform-origin: center;
-    will-change: transform;
+    transform-origin: center; will-change: transform;
   }
 
   /* Title */
@@ -104,8 +102,7 @@
   .work-thumb img{
     width:100%; height:100%; object-fit:contain;
     display:block; background:#fff;
-    transition: transform 180ms ease; /* allow smooth pop */
-    will-change: transform;
+    transition: transform 180ms ease; will-change: transform;
   }
 
   /* Description */
@@ -115,7 +112,7 @@
     display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
   }
 
-  /* Button */
+  /* Button (if needed later) */
   .btn{
     align-self:end; justify-self:center;
     margin:6px 0 10px;
@@ -126,31 +123,24 @@
   }
   .btn:hover{ background:#f2f2f2; }
 
-  /* === Hover / focus micro-interaction === */
+  /* === Shrink-on-hover / focus === */
   @media (hover: hover){
     .work-card:hover{
-      transform: scale(0.97);                 /* grow the whole card */
-      box-shadow: 0 14px 36px rgba(0,0,0,.22);
-      z-index: 2;                              /* above neighbors */
+      transform: scale(0.97);                /* shrink slightly */
+      box-shadow: 0 8px 24px rgba(0,0,0,.20);
+      z-index: 2;
     }
     .work-card:hover .work-thumb img{
-      transform: scale(1.02);                  /* subtle image pop */
+      transform: scale(0.98);                /* optional: shrink image a touch */
     }
   }
-
   .work-card:focus-within{
     outline: 0;
     transform: scale(0.97);
     box-shadow:
       0 0 0 3px rgba(106,100,95,.35),
-      0 14px 36px rgba(0,0,0,.22);
+      0 8px 24px rgba(0,0,0,.20);
     z-index: 2;
-  }
-
-  /* Respect reduced motion */
-  @media (prefers-reduced-motion: reduce){
-    .work-card, .work-thumb img, .reveal{ transition: none !important; }
-    .reveal{ opacity: 1; transform: none; }
   }
 
   /* Reveal on scroll */
@@ -159,9 +149,12 @@
     transform: translateY(12px);
     transition: opacity 420ms ease, transform 420ms ease;
   }
-  .reveal.is-visible{
-    opacity: 1;
-    transform: none;
+  .reveal.is-visible{ opacity: 1; transform: none; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .work-card, .work-thumb img, .reveal{ transition: none !important; }
+    .reveal{ opacity: 1; transform: none; }
   }
 
   /* Footer */
@@ -191,7 +184,7 @@
     </div>
   </nav>
 </header>
-  
+
 <section class="page-hero">
   <h1>My Work</h1>
 </section>
@@ -248,23 +241,19 @@
   <p>Back to <a href="index.html">Home</a></p>
 </footer>
 
-<!-- Make the header coloured only after any scroll -->
 <script>
+  // Header style after scroll
   const header = document.getElementById('siteHeader');
   function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
-</script>
 
-<script>
-  // reveal cards on scroll
+  // Reveal cards on scroll
   const els = document.querySelectorAll('.work-card');
   els.forEach(el => el.classList.add('reveal'));
-
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
   }, { threshold: 0.12 });
-
   els.forEach(el => io.observe(el));
 </script>
 </body>
