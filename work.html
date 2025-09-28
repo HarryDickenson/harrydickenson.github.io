@@ -211,4 +211,61 @@
   <!-- Card 2 -->
   <article class="work-card">
     <h3>IMC – M&amp;S and Tesco</h3>
-    <a class="work-thumb" href="assets/pdfs/IMC Assessme
+    <a class="work-thumb" href="assets/pdfs/IMC Assessment.pdf" download>
+      <img src="assets/pdfs/IMC IMG.png" alt="IMC project preview" />
+    </a>
+    <div class="desc">
+      An in-depth report comparing Tesco and M&amp;S’s communication strategies.
+    </div>
+  </article>
+
+  <!-- Card 3 -->
+  <article class="work-card">
+    <h3>Marketing in Practice — <span class="force-break">Report 1</span></h3>
+    <a class="work-thumb" href="assets/pdfs/MP1 Github.pdf" download>
+      <img src="assets/pdfs/MIP1 IMG.png" alt="MP1 project preview" />
+    </a>
+    <div class="desc">
+      Full-funnel digital plan for SME Nicola’s Chocolate using SOSTAC &amp; RACE.
+    </div>
+  </article>
+
+  <!-- Card 4 -->
+  <article class="work-card">
+    <h3>Marketing in Practice — <span class="force-break">Report 2</span></h3>
+    <a class="work-thumb" href="assets/pdfs/MP2 Github.pdf" download>
+      <img src="assets/pdfs/MIP2 IMG.png" alt="MP2 project preview" />
+    </a>
+    <div class="desc">
+      A complete marketing campaign for the Isles of Scilly, aimed at improving performance with younger demographics.
+    </div>
+  </article>
+</section>
+
+<footer class="site-footer">
+  <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 ·
+     <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
+  <p>Back to <a href="index.html">Home</a></p>
+</footer>
+
+<!-- Make the header coloured only after any scroll -->
+<script>
+  const header = document.getElementById('siteHeader');
+  function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+
+<script>
+  // reveal cards on scroll
+  const els = document.querySelectorAll('.work-card');
+  els.forEach(el => el.classList.add('reveal'));
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.12 });
+
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
