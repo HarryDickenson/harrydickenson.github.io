@@ -14,8 +14,8 @@
     --bg:#ffffff;
     --text:#111111;
     --card-bg:#4e4338;
-    --header-bg:#6a645f;
-    --header-fg:#1d1a14; /* NEW: header text colour */
+    --header-bg:#6a645f;   /* coloured after scroll */
+    --header-fg:#1d1a14;   /* header text colour */
     --maxw:1200px;
   }
 
@@ -28,18 +28,29 @@
     line-height:1.5;
   }
 
-  /* Header */
+  /* Header — transparent at top, coloured on scroll */
   .site-header{
-    position:sticky; top:0; z-index:50;
+    position:sticky;
+    top:0;
+    z-index:10000;              /* stay above embeds just in case */
+    isolation:isolate;          /* its own stacking context */
     padding:16px 24px;
-    border-bottom:1px solid rgba(0,0,0,.1);
-    background:var(--header-bg); color:var(--header-fg);
+    border-bottom:1px solid transparent;
+    background:transparent;     /* transparent before scrolling */
+    color:var(--header-fg);
+    transition:background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+  .site-header.is-sticky{
+    background:var(--header-bg); /* coloured after scroll */
+    box-shadow:0 6px 24px rgba(0,0,0,.08);
+    border-color:rgba(0,0,0,.06);
+    color:var(--header-fg);
   }
   .nav{ max-width:var(--maxw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
   .brand{ font-weight:600; }
   .nav-links{ display:flex; gap:28px; }
-  .nav-links a{ color:var(--header-fg); text-decoration:none; font-weight:500; }
-  .nav-links a:hover{ text-decoration:underline; color:var(--header-fg); }
+  .nav-links a{ color:inherit; text-decoration:none; font-weight:500; }
+  .nav-links a:hover{ text-decoration:underline; }
 
   /* Page title */
   .page-hero{ max-width:var(--maxw); margin:40px auto 20px; padding:0 24px; }
@@ -56,35 +67,29 @@
     background:var(--card-bg);
     border-radius:12px; overflow:hidden;
     display:flex; flex-direction:column; align-items:center; text-align:center;
-    color:#fff;
-    padding-bottom:14px;
+    color:#fff; padding-bottom:14px;
   }
   .work-card h3 .force-break{ display:block; }
 
-  /* Titles now use installed fonts (Inter/system stack) */
+  /* Titles use system stack */
   .work-card h3{
     margin:10px 0 6px 0;
     font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    font-weight:700;
-    font-style:normal;
+    font-weight:700; font-style:normal;
     font-size:clamp(18px, 1.6vw, 26px);
     letter-spacing:.2px;
   }
 
   /* Image */
   .work-card img{
-    width:85%;
-    height:auto; display:block;
-    border-radius:6px;
-    box-shadow:0 4px 16px rgba(0,0,0,.12);
+    width:85%; height:auto; display:block;
+    border-radius:6px; box-shadow:0 4px 16px rgba(0,0,0,.12);
     margin:8px 0;
   }
 
-  /* Description + button scale fluidly */
+  /* Description + button */
   .work-card .desc{
-    padding:10px 16px;
-    max-width:90%;
-    line-height:1.55;
+    padding:10px 16px; max-width:90%; line-height:1.55;
     font-size:clamp(15px, 1.1vw, 18px);
   }
   .work-card .btn{
@@ -92,9 +97,8 @@
     margin:12px 0;
     padding:clamp(8px,.8vw,12px) clamp(14px,1.2vw,18px);
     background:#fff; color:var(--card-bg);
-    font-weight:700; text-decoration:none;
-    border-radius:10px; font-size:clamp(14px, 1vw, 17px);
-    border:1px solid rgba(0,0,0,.12);
+    font-weight:700; text-decoration:none; border-radius:10px;
+    font-size:clamp(14px, 1vw, 17px); border:1px solid rgba(0,0,0,.12);
   }
   .work-card .btn:hover{ background:#f2f2f2; }
 
@@ -108,16 +112,14 @@
 </head>
 
 <body>
-<header class="site-header">
-  <nav class="nav">
+<header class="site-header" id="siteHeader">
+  <nav class="nav" aria-label="Primary">
     <div class="brand"><a href="index.html" style="text-decoration:none;color:inherit">Harry Lucas Dickenson</a></div>
-<div class="nav-links">
-  <a href="index.html">Home</a>
-  <a href="work.html" aria-current="page">Work</a>
-  <a href="index.html#contact">Contact</a>
-</div>
-
-
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="work.html" aria-current="page">Work</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
   </nav>
 </header>
 
@@ -129,10 +131,7 @@
   <!-- Card 1 -->
   <div class="work-card">
     <h3>Mulberry Group Work</h3>
-    <img
-      src="assets/pdfs/Mulberry IMG.png"
-      alt="Mulberry project preview"
-    />
+    <img src="assets/pdfs/Mulberry IMG.png" alt="Mulberry project preview" />
     <div class="desc">
       A strategic marketing presentation focusing on sustainable branding, international expansion, and Gen Z consumer engagement.
     </div>
@@ -142,32 +141,35 @@
   <!-- Card 2 -->
   <div class="work-card">
     <h3>IMC – M&amp;S and Tesco</h3>
-    <img
-      src="assets/pdfs/IMC IMG.png"
-      alt="IMC project preview"
-    />
+    <img src="assets/pdfs/IMC IMG.png" alt="IMC project preview" />
     <div class="desc">
       An in-depth report comparing Tesco and M&amp;S’s communication strategies.
     </div>
     <a class="btn" href="assets/pdfs/IMC Assessment.pdf" download>Download PDF</a>
   </div>
 
-    <! -- Card 3 -->
+  <!-- Card 3 -->
   <div class="work-card">
     <h3>Marketing in Practice — <span class="force-break">Report 1</span></h3>
-    <img
-      src="assets/pdfs/MIP1 IMG.png"
-      alt="MP1 project preview"
-    />
+    <img src="assets/pdfs/MIP1 IMG.png" alt="MP1 project preview" />
     <div class="desc">
-     Full-funnel digital plan for SME Nicola’s Chocolate using SOSTAC & RACE.
+      Full-funnel digital plan for SME Nicola’s Chocolate using SOSTAC &amp; RACE.
+    </div>
     <a class="btn" href="assets/pdfs/MP1 Github.pdf" download>Download PDF</a>
   </div>
 </section>
 
 <footer class="site-footer">
   <p>📧 <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a> · 📞 +44 (0)7985 579 323 · <a href="https://www.linkedin.com/in/harry-dickenson-aa5b8b242/" target="_blank">LinkedIn</a></p>
-  <p>Back to <a href="index.html#home">Home</a></p>
+  <p>Back to <a href="index.html">Home</a></p>
 </footer>
+
+<!-- JS: make header coloured only after any scroll -->
+<script>
+  const header = document.getElementById('siteHeader');
+  function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll(); // initial state
+</script>
 </body>
 </html>
