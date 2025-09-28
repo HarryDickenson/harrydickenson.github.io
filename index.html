@@ -8,40 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #111111;
-      --muted: #4a4a4a;
-      --card: #231b14;
-      --accent: #3b2f25;
-      --radius: 1.25rem;
-      --header-bg: #6a645f;   /* header background when scrolled */
-      --header-fg: #1d1a14;   /* header text colour */
-      --maxw: 1200px;
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#4a4a4a;
+      --card:#231b14;
+      --accent:#3b2f25;
+      --radius:1.25rem;
+      --header-bg:#6a645f;   /* header background when scrolled */
+      --header-fg:#1d1a14;   /* header text colour */
+      --maxw:1200px;
+      --header-h:64px;       /* approximate header height for anchor offset */
     }
 
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
     }
 
     /* ===== Header / Nav ===== */
     .site-header{
       position: sticky;
       top: 0;
-      z-index: 10000;
+      z-index: 10000;                   /* sit above embeds */
+      isolation: isolate;               /* its own stacking context */
       padding: 16px 24px;
       border-bottom: 1px solid transparent;
-      background-color: transparent;        /* transparent at top */
-      color: var(--header-fg);               /* #1d1a14 */
+      background-color: transparent;    /* transparent at top */
+      color: var(--header-fg);
       transition: background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     }
     .site-header.is-sticky{
-      background-color: var(--header-bg);    /* #6a645f once scrolled */
+      background-color: var(--header-bg);  /* coloured after scroll */
       box-shadow: 0 6px 24px rgba(0,0,0,0.08);
       border-color: rgba(0,0,0,0.06);
       color: var(--header-fg);
@@ -97,6 +99,9 @@
     .lead{ color: var(--muted); font-size: 20px; }
     .section p{ max-width: 80ch; font-size: 20px; }
 
+    /* Offset for sticky header when jumping to anchors */
+    #about, #video, #contact { scroll-margin-top: var(--header-h); }
+
     /* ===== Media helpers ===== */
     .wide-media{
       width: 100%; height: auto; display: block;
@@ -108,10 +113,11 @@
       padding-bottom: 56.25%; /* 16:9 */
       background: #000; border-radius: 8px; overflow: hidden;
       box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      z-index: 0; /* stay under the header */
     }
-    .video-wrap{ position: relative; z-index: 0; }
     .video-wrap iframe{
       position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; /* stay under the header */
     }
 
     /* ===== Floating CV Button ===== */
@@ -122,6 +128,7 @@
       font-weight: 700; cursor: pointer;
       box-shadow: 0 10px 24px rgba(0,0,0,0.18);
       transition: transform 160ms ease, box-shadow 160ms ease;
+      z-index: 900; /* below header, above content */
     }
     .cv-btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
 
@@ -129,6 +136,12 @@
     @media (max-width: 960px){
       .hero{ grid-template-columns: 1fr; margin-top: 32px; }
       .me-card{ order: -1; }
+    }
+
+    /* Fallback for browsers without sticky support */
+    @supports not (position: sticky){
+      .site-header{ position: fixed; left:0; right:0; top:0; }
+      body{ padding-top: var(--header-h); }
     }
   </style>
 </head>
@@ -182,15 +195,13 @@
   </section>
 
   <!-- Floating Download CV Button -->
-  <a href="#" class="cv-btn" download aria-label="Download my CV">Download My CV</a>
+  <a href="assets/pdfs/Harry_Dickenson_CV.pdf" class="cv-btn" download aria-label="Download my CV">Download My CV</a>
 
-  <!-- JS (single block) -->
+  <!-- JS -->
   <script>
     // Sticky header: transparent at top, coloured after any scroll
     const header = document.getElementById('siteHeader');
-    function onScroll() {
-      header.classList.toggle('is-sticky', window.scrollY > 0);
-    }
+    function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll(); // initial state
 
