@@ -70,7 +70,10 @@
     max-width:var(--maxw);
     margin:0 auto 64px;
     padding:0 24px;
-    display:flex; flex-wrap:wrap; gap:var(--gap);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* exactly 2 per row */
+    gap: var(--gap);
     justify-content:center;
   }
 
