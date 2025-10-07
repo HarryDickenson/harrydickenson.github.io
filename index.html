@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Harry Lucas Dickenson — Marketing Portfolio</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#ffffff;
@@ -18,7 +20,7 @@
 
       --header-bg:#6a645f;   /* coloured after scroll */
       --header-fg:#1d1a14;   /* header text colour */
-      --header-h:64px;       /* for anchor offset */
+      --header-h:64px;       /* header height for offsets */
 
       --maxw:1200px;
     }
@@ -30,14 +32,21 @@
       color:var(--text);
       background:var(--bg);
       line-height:1.5;
+
+      /* Make room for the fixed header so content doesn't hide behind it */
+      padding-top: var(--header-h);
     }
 
-    /* ===== Header (transparent at top) ===== */
+    /* ===== Header (transparent at top, solid after scroll) ===== */
     .site-header{
-      position: sticky; top: 0;
-      z-index: 10000;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      z-index: 9999;                 /* sits above everything */
       isolation: isolate;
-      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
       border-bottom: 1px solid transparent;
       background: transparent;
       color: var(--header-fg);
@@ -50,6 +59,7 @@
     }
     .nav{
       max-width: var(--maxw);
+      width: 100%;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr auto;
@@ -64,16 +74,14 @@
     /* ===== Hero ===== */
     .hero {
       max-width: var(--maxw);
-      margin: 0 auto; /* remove top margin completely */
+      margin: 0 auto;
       padding: 0 24px;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       align-items: center;
       gap: clamp(24px, 5vw, 64px);
-    
-      /* Let hero fill most of the screen but not overshoot */
-      min-height: calc(90vh - var(--header-h)); 
-      padding-block: clamp(16px, 4vh, 64px); /* reduce breathing space */
+      min-height: calc(90vh - var(--header-h));
+      padding-block: clamp(16px, 4vh, 64px);
     }
     .hero h1{
       font-size: clamp(42px, 10vw, 120px);
@@ -91,28 +99,22 @@
       color: rgba(255,255,255,.7);
       font-weight: 500;
       user-select: none;
+      overflow: hidden;
     }
-      @media (max-width: 960px){
-    .hero {
-      grid-template-columns: 1fr;
-      margin-top: 0;           /* no forced gap */
-      min-height: auto;        /* let content size itself */
-      padding-block: 32px 48px;
-    }
-    .me-card { order: -1; }
-  }
 
     /* ===== Sections ===== */
     .section{
       max-width: var(--maxw);
       margin: 0 auto;
       padding: clamp(32px, 4vh, 64px) 24px clamp(96px, 12vh, 160px) 24px;
+      position: relative;
+      z-index: 1; /* explicitly below header */
     }
     .section h2{ font-size: clamp(28px, 5vw, 56px); margin: 0 0 24px 0; }
     .lead{ color: var(--muted); font-size: 20px; }
     .section p{ max-width: 80ch; font-size: 20px; }
 
-    /* Anchor offset for sticky header */
+    /* Anchor offset for fixed header */
     #about, #video, #contact{ scroll-margin-top: var(--header-h); }
 
     /* ===== Media helpers ===== */
@@ -126,7 +128,7 @@
       padding-bottom: 56.25%; /* 16:9 */
       background: #000; border-radius: 8px; overflow: hidden;
       box-shadow: 0 4px 18px rgba(0,0,0,.08);
-      z-index: 0; /* keep under header */
+      z-index: 0; /* under header */
     }
     .video-wrap iframe{
       position: absolute; inset: 0; width: 100%; height: 100%;
@@ -146,34 +148,23 @@
     .cv-btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.22); }
 
     /* ===== Reveal animations ===== */
-
-    /* Generic upward reveal for sub-headings (h2) */
     .reveal-up{
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 420ms ease, transform 420ms ease;
     }
-    .reveal-up.is-visible{
-      opacity: 1;
-      transform: none;
-    }
+    .reveal-up.is-visible{ opacity: 1; transform: none; }
 
-    /* Hero title reveal on first load (slightly more dramatic) */
     .reveal-hero{
       opacity: 0;
       transform: translateY(14px) scale(.98);
       transition: opacity 600ms cubic-bezier(.2,.6,.2,1), transform 600ms cubic-bezier(.2,.6,.2,1);
       will-change: transform, opacity;
     }
-    .reveal-hero.is-visible{
-      opacity: 1;
-      transform: none;
-    }
+    .reveal-hero.is-visible{ opacity: 1; transform: none; }
 
-    /* Respect users who prefer less motion */
     @media (prefers-reduced-motion: reduce){
-      .reveal-up,
-      .reveal-hero{
+      .reveal-up,.reveal-hero{
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
@@ -182,7 +173,11 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 960px){
-      .hero{ grid-template-columns: 1fr; margin-top: 32px; }
+      .hero{
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-block: 32px 48px;
+      }
       .me-card{ order: -1; }
     }
   </style>
@@ -202,12 +197,11 @@
 
   <!-- Hero / Landing -->
   <main id="home" class="hero" role="main">
-    <!-- hero title reveals on first load -->
     <h1 class="reveal-hero">Marketing<br/>Portfolio</h1>
-   <figure class="me-card">
-    <img src="assets/pdfs/IMG_5319.jpg" alt="Portrait of Harry Lucas Dickenson" 
-       style="width:100%; height:100%; object-fit:cover; border-radius:8px;" />
-   </figure>
+    <figure class="me-card">
+      <img src="assets/pdfs/IMG_5319.jpg" alt="Portrait of Harry Lucas Dickenson"
+           style="width:100%; height:100%; object-fit:cover;" />
+    </figure>
   </main>
 
   <!-- About Section -->
@@ -219,8 +213,8 @@
   </section>
 
   <!-- Video Section -->
-  <section id="video" class="section">
-    <h2 class="reveal-up">Watch My Intro Video</h2>
+  <section id="video" class="section" aria-labelledby="video-title">
+    <h2 id="video-title" class="reveal-up">Watch My Intro Video</h2>
     <div class="video-wrap">
       <iframe
         src="https://www.youtube.com/embed/VIDEO_ID"
@@ -233,11 +227,11 @@
   </section>
 
   <!-- Contact Section -->
-  <section class="section" id="contact" aria-label="Contact">
-    <h2 class="reveal-up">Contact</h2>
-    <p>Email: <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com </a></p>
-    <p>Phone: <a href="+44 7985 579323"> +44 7985 579323</p>
-    <p><a href="https://www.linkedin.com/in/harry-dickenson/">LinkedIn</p>
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title" class="reveal-up">Contact</h2>
+    <p>Email: <a href="mailto:harrydickenson890@gmail.com">harrydickenson890@gmail.com</a></p>
+    <p>Phone: <a href="tel:+447985579323">+44 7985 579323</a></p>
+    <p><a href="https://www.linkedin.com/in/harry-dickenson/">LinkedIn</a></p>
   </section>
 
   <!-- Floating Download CV Button -->
@@ -245,35 +239,28 @@
 
   <!-- JS -->
   <script>
-    // Sticky header: transparent at top, coloured after any scroll
+    // Header colour change after any scroll
     const header = document.getElementById('siteHeader');
     function onScroll(){ header.classList.toggle('is-sticky', window.scrollY > 0); }
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // initial state
+    onScroll();
 
     // Reveal on load for hero title
     window.addEventListener('DOMContentLoaded', () => {
       const heroTitle = document.querySelector('.reveal-hero');
-      // small delay feels nicer
       setTimeout(() => heroTitle.classList.add('is-visible'), 120);
     });
 
-    // Scroll reveal for all .reveal-up elements (your subheadings)
+    // Scroll reveal for .reveal-up elements
     const revealEls = document.querySelectorAll('.reveal-up');
-     const io = new IntersectionObserver((entries, obs) => {
+    const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('is-visible');
           obs.unobserve(e.target);
         }
       });
-    }, {
-      // Shrink the top/bottom of the viewport by 20% so elements need to be
-      // further inside before revealing, and require ~60% of the element visible
-      rootMargin: '-20% 0px -20% 0px',
-      threshold: 0.6
-    });
-
+    }, { rootMargin: '-20% 0px -20% 0px', threshold: 0.6 });
     revealEls.forEach(el => io.observe(el));
 
     // Smooth-scroll for same-page links
